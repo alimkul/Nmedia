@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Nmedia</string>
     <string name="hellostrgin">Hello World!</string>
+    <string name="name_repost" translatable="false">Нетология. Университет интернет-профессия</string>
+    <string name="date_repost" translatable="false">21 мая в 18:30</string>
+
+
+
+
+
 
 </resources>
