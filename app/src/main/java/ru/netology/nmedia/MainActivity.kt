@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
                 author = "Нетология. Университет интернет-профессии будушего",
                 content = "Привет, это новая Нетология! Когда-то Нетология начиналась с интесивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике",
                 published = "21 мая в 18:36",
-                likesCount = 2100000, likedByMe = false, sharesCount = 88777, viewCount = 221000
+                likesCount = 119999, likedByMe = false, sharesCount = 89999, viewCount = 221999
         )
         with(binding)
         {
@@ -56,17 +56,19 @@ class MainActivity : AppCompatActivity() {
     fun checkCount(count: Int): String {
         var text: String =""
 
-        if (count >= 10000 && count < 1000000) {
-            if (count % 10000 > 1000)
-                text = "${myRound(count.toDouble() / 1000)}K"
+        if (count >= 1000 && count < 1000000) {
+            if (count % 1000 >=100 && count%1000<=999)
+                text = "${myRound(count / 1000.0)}K"
+
             else
-                text = "${myRound(count / 1000.0).toInt()}K"
+                text = "${(myRound(count / 1000.0).toInt())}K"
         }
         else if(count>=1000000){
-            if (count % 1000000>100000) {
-            text = "${myRound(count.toDouble() / 1000000)}M"
+            if (count % 1000000>=100000) {
+            text = "${myRound(count / 1000000.0)}M"
             } else {
                 text = "${myRound(count / 1000000.0).toInt()}M"
+
             }
         }
         else{
@@ -77,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     }
     //сократить дробное число до 1/10
     fun myRound(count: Double): Double {
-        return Math.round(count * 10.0) / 10.0
+        return Math.floor(count * 10.0) / 10.0
     }
 }
 
