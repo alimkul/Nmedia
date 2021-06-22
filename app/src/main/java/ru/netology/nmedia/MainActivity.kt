@@ -32,7 +32,16 @@ class MainActivity : AppCompatActivity() {
 
             sharecount.text = checkCount(post.sharesCount)
 
+            binding.likes.setOnClickListener{
+                println("Like!")
+            }
+            binding.root.setOnClickListener{
+                println("root")
+            }
 
+            binding.avatar.setOnClickListener{
+                println("re")
+            }
             likes?.setOnClickListener {
                 post.likedByMe = !post.likedByMe
                 likes.setImageResource(
