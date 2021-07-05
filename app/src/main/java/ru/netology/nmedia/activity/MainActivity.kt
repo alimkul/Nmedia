@@ -1,9 +1,12 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.viewModels
+import ru.netology.nmedia.R
+import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.viewmodel.PostViewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -11,7 +14,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)// названия нашего лауота
         setContentView(binding.root)
-
         val post = Post(
                 id = 1,
                 author = "Нетология. Университет интернет-профессии будушего",
@@ -19,45 +21,43 @@ class MainActivity : AppCompatActivity() {
                 published = "21 мая в 18:36",
                 likesCount = 119999, likedByMe = false, sharesCount = 89999, viewCount = 221999
         )
-        with(binding)
-        {
-            author.text = post.author
-            content.text = post.content
-            published.text = post.published
-            sharecount.text = post.sharesCount.toString()
-            if (post.likedByMe) {
-                likes?.setImageResource(R.drawable.ic_liked_24)
-            }
-            likecount.text = checkCount(post.likesCount)
-
-            sharecount.text = checkCount(post.sharesCount)
-
-            binding.likes.setOnClickListener{
-                println("Like!")
-            }
-            binding.root.setOnClickListener{
-                println("root")
-            }
-
-            binding.avatar.setOnClickListener{
-                println("re")
-            }
-            likes?.setOnClickListener {
-                post.likedByMe = !post.likedByMe
-                likes.setImageResource(
-                        if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
-                )
-                if (post.likedByMe) post.likesCount++
-                else post.likesCount--
+        val viewModel: PostViewModel by viewModels()
+        viewModel.data.observe(this, { post ->
+            with(binding) {
+                author.text = post.author
+                content.text = post.content
+                published.text = post.published
+                sharecount.text = post.sharesCount.toString()
+                if (post.likedByMe) {
+                    likes?.setImageResource(R.drawable.ic_liked_24)
+                }
                 likecount.text = checkCount(post.likesCount)
 
-            }
-            share?.setOnClickListener {
-                post.sharesCount++
                 sharecount.text = checkCount(post.sharesCount)
-            }
-            viewcount.text = checkCount(post.viewCount)
 
+
+
+
+                likes?.setOnClickListener {
+                    post.likedByMe = !post.likedByMe
+                    likes.setImageResource(
+                        if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
+                    )
+                    if (post.likedByMe) post.likesCount++
+                    else post.likesCount--
+                    likecount.text = checkCount(post.likesCount)
+
+                }
+                share?.setOnClickListener {
+                    post.sharesCount++
+                    sharecount.text = checkCount(post.sharesCount)
+                }
+                viewcount.text = checkCount(post.viewCount)
+            }
+        })
+        binding.likes.setOnClickListener{
+            viewModel.like()
+        }
         }
     }
 
@@ -90,5 +90,5 @@ class MainActivity : AppCompatActivity() {
     fun myRound(count: Double): Double {
         return Math.floor(count * 10.0) / 10.0
     }
-}
+
 
