@@ -35,9 +35,6 @@ class MainActivity : AppCompatActivity() {
 
                 sharecount.text = checkCount(post.sharesCount)
 
-
-
-
                 likes?.setOnClickListener {
                     post.likedByMe = !post.likedByMe
                     likes.setImageResource(
